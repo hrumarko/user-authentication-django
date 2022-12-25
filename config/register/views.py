@@ -18,6 +18,9 @@ class UserRegister(CreateView):
     form_class = UserRegisterForm
     template_name = 'register/registr.html'
 
+    def get_success_url(self):
+        return reverse_lazy('login')
+
 class UserLogin(LoginView):
     template_name = 'register/login.html'
     form_class = UserLoginForm

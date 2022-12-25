@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView
@@ -19,7 +20,11 @@ class UserRegister(CreateView):
     template_name = 'register/registr.html'
 
     def get_success_url(self):
-        return reverse_lazy('login')
+        username = self.request.POST.get('email')
+        password = self.request.POST.get('password1')
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return reverse_lazy('home')
 
 class UserLogin(LoginView):
     template_name = 'register/login.html'
